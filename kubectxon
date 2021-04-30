@@ -136,7 +136,7 @@ toggle_ctxon() {
 
 printf 'Current state is "%s"\n' "$state"
 declare -p state > "$statefile"
-exec bash || exit_err "error bash re-run bash prompt" 
+exec $SHELL || exit_err "error bash re-run bash prompt" 
 }
 
 set_env() {
