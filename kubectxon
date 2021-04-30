@@ -37,13 +37,13 @@ usage() {
 INSTALLATION:
   git clone https://github.com/sysnet4admin/kubectxon.git
   cd https://github.com/sysnet4admin/kubectxon.git
-  ./ctxon
+  ./kubectxon
 
   OR
   
-  curl -O https://raw.githubusercontent.com/sysnet4admin/kubectxon/main/ctxon
-  chmod +x ctxon 
-  ./ctxon  
+  curl -O https://raw.githubusercontent.com/sysnet4admin/kubectxon/main/kubectxon
+  chmod +x kubectxon 
+  ./kubectxon
 
 USAGE:
   kubectxon             : toggle context on/off
@@ -92,7 +92,7 @@ toggle_ctxon() {
     # avoid doulbe input in .bashrc 
     case `grep -Fx "# HoonJo(SysNet4Admin)" "$rcPATH" >/dev/null; echo $?` in
     0)
-      echo "ctxon already installed" 
+      echo "kubectxon already installed" 
       exit 1 
       ;;
     1)
@@ -146,8 +146,8 @@ set_env() {
   # create running file for kubectxon 
   if [[ ! -d "$ctxonhome" ]]; then  
     mkdir -p $HOME/.ctxon
-    cp ctxon $HOME/.ctxon
-    sudo ln -s $HOME/.ctxon/ctxon /usr/local/bin/kubectxon
+    cp kubectxon $HOME/.ctxon
+    sudo ln -s $HOME/.ctxon/kubectxon /usr/local/bin/kubectxon
   fi 
 }
 
