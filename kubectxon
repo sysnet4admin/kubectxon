@@ -1,0 +1,201 @@
+#!/bin/bash -i
+#
+# interactive bash for bash prompt instantly change 
+# kubectxon(1) is a utility to toggle context on the prompt 
+
+# Copyright 2021 SysNet4Admin (Hoon Jo)
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+[[ -n $DEBUG ]] && set -x
+set -eou pipefail
+IFS=$'\n\t'
+
+# set global variable 
+rcPATH="$HOME/.${SHELL:5}rc"
+historyPATH="$HOME/.${SHELL:5}_history"
+
+usage() {
+  local SELF
+  SELF="kubectl-ctxon"
+  if [[ "$(basename "$0")" == kubectl-* ]]; then # invoked as plugin
+    SELF="kubectl ctxon"
+  fi
+
+  cat <<EOF
+
+INSTALLATION:
+  git clone https://github.com/sysnet4admin/kubectxon.git
+  cd https://github.com/sysnet4admin/kubectxon.git
+  ./ctxon
+
+  OR
+  
+  curl -O https://raw.githubusercontent.com/sysnet4admin/kubectxon/main/ctxon
+  chmod +x ctxon 
+  ./ctxon  
+
+USAGE:
+  kubectxon             : toggle context on/off
+  kubectxon uninstall   : remove all of configuration 
+  kubectxon <COLOR>     : set color for context 
+  kubectxon -h,--help   : show help messsage 
+
+< Color Table > 
+--------------------------------------------
+| Foreground(text)color | Background color |
+--------------------------------------------
+| 30: Black             | 40: Black        |
+| 31: Red               | 41: Red          |
+| 32: Green             | 42: Green        |
+| 33: Yellow            | 43: Yellow       |
+| 34: Blue              | 44: Blue         |
+| 35: Purple            | 45: Purple       |
+| 36: Cyan              | 46: Cyan         |
+| 37: White             | 47: White (*)    |
+--------------------------------------------
+
+EOF
+}
+
+exit_err() {
+   echo >&2 "${1}"
+   exit 1
+}
+
+pass_kubectl() {
+  if hash kubectl 2>/dev/null; then
+    KUBECTL=kubectl
+  elif hash kubectl.exe 2>/dev/null; then
+    KUBECTL=kubectl.exe
+  else
+    exit_err "kubectl is not installed"
+  fi
+}
+
+toggle_ctxon() {
+  statefile=$HOME/.ctxon/ctxon.state
+  setfile=$HOME/.ctxon/ctxon.set 
+  originalfile=$HOME/.ctxon/ctxon.original.ps1
+
+  if [[ ! -f "$originalfile" ]]; then 
+    # avoid doulbe input in .bashrc 
+    case `grep -Fx "# HoonJo(SysNet4Admin)" "$rcPATH" >/dev/null; echo $?` in
+    0)
+      echo "ctxon already installed" 
+      exit 1 
+      ;;
+    1)
+      echo "# HoonJo(SysNet4Admin)"      >> $rcPATH
+      echo "source $setfile 2>/dev/null" >> $rcPATH
+      ;;
+    *)
+      echo "unexpected error" 
+      ;;
+    esac
+  fi 
+  
+  # retain origianl PS1 
+  if [[ ! -f "$originalfile" ]]; then 
+    echo ${PS1} > $originalfile
+  fi
+
+  # state changer or init 
+  if [ -f "$statefile" ]; then
+    . "$statefile"
+  else
+    state=init 
+  fi
+
+  # setup PS1 decriptor 
+  ORIGINAL_PS1=$(cat $originalfile)  
+  case $state in
+    on) 
+      state=off
+      echo export PS1=\""$ORIGINAL_PS1"\" > "$setfile"
+      ;;
+    *)  
+      state=on
+      if [[ $ARG1 = "default" ]]; then
+        echo export PS1='"${PS1@P}"'"'"'\e[47m($(kubectl config current-context))\e[m '"'"'' > "$setfile"
+      else 
+        echo export PS1='"${PS1@P}"'"'"'\e['"$ARG1"'m($(kubectl config current-context))\e[m '"'"'' > "$setfile"
+      fi 
+      ;;
+  esac
+
+printf 'Current state is "%s"\n' "$state"
+declare -p state > "$statefile"
+exec bash || exit_err "error bash re-run bash prompt" 
+}
+
+set_env() {
+  # create ctxon working home  
+  ctxonhome=$HOME/.ctxon/
+
+  # create running file for kubectxon 
+  if [[ ! -d "$ctxonhome" ]]; then  
+    mkdir -p $HOME/.ctxon
+    cp ctxon $HOME/.ctxon
+    sudo ln -s $HOME/.ctxon/ctxon /usr/local/bin/kubectxon
+  fi 
+}
+
+unset_env() {
+  # remove ctxon related 
+  rm -rf $ctxonhome
+  sudo rm /usr/local/bin/kubectxon
+  sed -i '/HoonJo/d'    $rcPATH
+  sed -i '/ctxon.set/d' $rcPATH
+}
+
+main() {
+  # avoid chaos history 
+  unset HISTFILE
+  
+  # create ctxon working directory & kubectxon as well 
+  set_env
+
+  # backup history 
+  cp $historyPATH $HOME/.ctxon/.backup_history	
+
+  pass_kubectl
+  ARGS=${@:1}
+
+  if [[ "$#" -eq 0 ]]; then
+    ARG1="default" 
+    toggle_ctxon
+    exit 0
+  elif [[ "$1" == "-h" || "$1" == "--help" ]]; then
+    usage
+    exit 0
+  elif [[ "$1" == "uninstall" ]]; then
+    unset_env
+    exit 0
+  elif (( $1 >= 30 && $1 <= 37 || $1 >=40 && $1 <=47 )); then
+    ARG1="$1"	  
+    toggle_ctxon
+    exit 0 
+  else
+    echo "$ARGS Option Not Supported"	 
+    exit 1  
+  fi
+
+  # history recovery and up all 
+  mv $HOME/.ctxon/.backup_history $historyPATH
+  history -c; history -r $historyPATH
+  set HISTFILE
+}
+
+main "$@"
+
