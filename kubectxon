@@ -154,11 +154,10 @@ set_env() {
 
 unset_env() {
   # remove ctxon related 
-  rm -rf $ctxonhome
-  sudo rm /usr/local/bin/kubectxon
-  # e for zsh 
-  sed -ie '/HoonJo/d'    $rcPATH 
-  sed -ie '/ctxon.set/d' $rcPATH
+  rm -rf $ctxonhome                 || true
+  sudo rm /usr/local/bin/kubectxon  || true
+  sed -ie '/HoonJo/d'    $rcPATH    || true
+  sed -ie '/ctxon.set/d' $rcPATH    || true
 }
 
 main() {
