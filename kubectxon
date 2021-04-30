@@ -105,8 +105,9 @@ toggle_ctxon() {
   fi 
   
   # retain origianl PS1 
+  # GCP compatibility to change PS1@P
   if [[ ! -f "$originalfile" ]]; then 
-    echo ${PS1} > $originalfile
+    echo ${PS1@P} > $originalfile
   fi
 
   # state changer or init 
