@@ -155,8 +155,9 @@ unset_env() {
   # remove ctxon related 
   rm -rf $ctxonhome
   sudo rm /usr/local/bin/kubectxon
-  sed -i '/HoonJo/d'    $rcPATH
-  sed -i '/ctxon.set/d' $rcPATH
+  # e for zsh 
+  sed -ie '/HoonJo/d'    $rcPATH 
+  sed -ie '/ctxon.set/d' $rcPATH
 }
 
 main() {
