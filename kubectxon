@@ -36,8 +36,7 @@ usage() {
 
 INSTALLATION:
   git clone https://github.com/sysnet4admin/kubectxon.git
-  cd https://github.com/sysnet4admin/kubectxon.git
-  ./kubectxon
+  ./kubectxon/kubectxon
 
   OR
   
