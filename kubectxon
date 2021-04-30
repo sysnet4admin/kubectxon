@@ -127,9 +127,9 @@ toggle_ctxon() {
     *)  
       state=on
       if [[ $ARG1 = "default" ]]; then
-        echo export PS1='"${PS1@P}"'"'"'\e[47m($(kubectl config current-context))\e[m '"'"'' > "$setfile"
+        echo export PS1='"${PS1}"'"'"'\e[47m($(kubectl config current-context))\e[m '"'"'' > "$setfile"
       else 
-        echo export PS1='"${PS1@P}"'"'"'\e['"$ARG1"'m($(kubectl config current-context))\e[m '"'"'' > "$setfile"
+        echo export PS1='"${PS1}"'"'"'\e['"$ARG1"'m($(kubectl config current-context))\e[m '"'"'' > "$setfile"
       fi 
       ;;
   esac
