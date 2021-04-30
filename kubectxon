@@ -21,9 +21,9 @@
 set -eou pipefail
 IFS=$'\n\t'
 
-# set global variable 
-rcPATH="$HOME/.${SHELL:5}rc"
-historyPATH="$HOME/.${SHELL:5}_history"
+# set global variable for bash 
+rcPATH="$HOME/.bashrc"
+historyPATH="$HOME/.bash_history"
 
 usage() {
   local SELF
@@ -136,7 +136,7 @@ toggle_ctxon() {
 
 printf 'Current state is "%s"\n' "$state"
 declare -p state > "$statefile"
-exec $SHELL || exit_err "error bash re-run bash prompt" 
+exec bash || exit_err "error bash re-run bash prompt" 
 }
 
 set_env() {
@@ -168,7 +168,7 @@ main() {
   set_env
 
   # backup history 
-  cp $historyPATH $HOME/.ctxon/.backup_history	
+  cp -r $historyPATH $HOME/.ctxon/.backup_history	
 
   pass_kubectl
   ARGS=${@:1}
@@ -193,6 +193,7 @@ main() {
   fi
 
   # history recovery and up all 
+  echo $historyPATH
   mv $HOME/.ctxon/.backup_history $historyPATH
   history -c; history -r $historyPATH
   set HISTFILE
