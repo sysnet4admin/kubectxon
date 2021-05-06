@@ -91,6 +91,6 @@ $ ./kubectxon
 -----
 
 ### Uninstall kubectxon 
-**`kubectxon`** supports uninstall option for your convenience :) 
+**`kubectxon`** supports `uninstall` option for your convenience :) 
 ![kubectxon-uninstall-demo GIF](img/kubectxon-uninstall-demo.gif)
 
