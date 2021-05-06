@@ -12,7 +12,7 @@
 
 # kubectxon
 
-kubectxon is a utility to show up active-context.
+kubectxon is a utility to show up the active-context.
 
 ```
 USAGE:
@@ -49,16 +49,13 @@ $
 -----
 
 ## Installation
-Caution: It support only 'BASH' Shell above 5.0.  
+**Caution**: It support only 'BASH' Shell above 5.0.  
 - As a `krew` which kubernetes plugins 
 - Manual installation
 
 ### krew (under construction)
 You can install and use [Krew](https://github.com/kubernetes-sigs/krew/) kubectl
-plugin manager to get `kubectx` and `kubens`. **NOTE:** This will not install
-shell completion scripts, if you want those, choose another installation method
-below.
-
+plugin manager to get `kubectxon` 
 ```bash
 $ kubectl krew install ctxon 
 ```
@@ -77,24 +74,25 @@ them to any POSIX environment that has Bash installed.
   - or save them to a directory, then create symlinks to `kubectx`/`kubens` from
     somewhere in your `PATH`, like `/usr/local/bin`
 - Make `kubectxon` executable (`chmod +x ...`)
-  - For bash:
-    ```bash
-    $ git clone https://github.com/sysnet4admin/kubectxon.git
-    $ cd kubectxon
-    $ ./kubectxon
-    ```
-    OR
-    ```bash
-    $ curl -O https://raw.githubusercontent.com/sysnet4admin/kubectxon/main/kubectxon
-    $ chmod +x kubectxon
-    $ ./kubectxon
-    ```
+```bash
+$ git clone https://github.com/sysnet4admin/kubectxon.git
+$ cd kubectxon
+$ ./kubectxon
+```
+
+**OR**
+
+```bash
+$ curl -O https://raw.githubusercontent.com/sysnet4admin/kubectxon/main/kubectxon
+$ chmod +x kubectxon
+$ ./kubectxon
+```
 
 -----
 
 ### Uninstall kubectxon 
 It supports auto-remover function. 
 
-**`kubectxon`** supports to uninstaller:
+**`kubectxon`** supports uninstaller for your convenience :) 
 ![kubectxon-uninstall-demo GIF](img/kubectxon-uninstall-demo.gif)
 
