@@ -53,7 +53,7 @@ $
 - As a `krew` which kubernetes plugins 
 - Manual installation
 
-### krew (under construction)
+#### krew (under construction)
 You can install and use [Krew](https://github.com/kubernetes-sigs/krew/) kubectl
 plugin manager to get `kubectxon` 
 ```bash
@@ -63,7 +63,7 @@ $ kubectl krew install ctxon
 After installing, the tools will be available as `kubectl ctxon`.
 
 
-#### Manual
+### Manual
 
 Since `kubectxon` is written in Bash, you should be able to install
 them to any POSIX environment that has Bash installed.
