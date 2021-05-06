@@ -1,6 +1,6 @@
-# `kubectx` + `kubens`: Power tools for kubectl
+# `kubectxon`: Show on active-context
 
-![Latest GitHub release](https://img.shields.io/github/release/ahmetb/kubectx.svg)
+![Latest GitHub release](https://img.shields.io/github/release/sysnet4admin/kubectxon.svg)
 ![Proudly written in Bash](https://img.shields.io/badge/written%20in-bash-ff69b4.svg)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
@@ -10,7 +10,7 @@
 **`kubectxon`** supports color variation on the prompt:
 ![kubectxon-color-demo GIF](img/kubectxon-color-demo.gif)
 
-# kubectxon(1)
+# kubectxon
 
 kubectxon is a utility to show up active-context.
 
