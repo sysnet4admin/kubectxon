@@ -1,6 +1,6 @@
 # `kubectxon`: Show on active-context
 
-![Latest GitHub release](https://img.shields.io/github/release/sysnet4admin/kubectxon.svg)
+[![version](https://img.shields.io/badge/version-0.0.1-yellow.svg)](https://semver.org)
 ![Proudly written in Bash](https://img.shields.io/badge/written%20in-bash-ff69b4.svg)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
