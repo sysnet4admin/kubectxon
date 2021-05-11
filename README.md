@@ -62,6 +62,16 @@ $ kubectl krew install ctxon
 
 After installing, the tools will be available as `kubectl ctxon`.
 
+### krew-2 (custom-index)
+You can install and use [Krew](https://github.com/kubernetes-sigs/krew/) kubectl
+plugin manager to get `kubectxon` 
+```bash
+$ kubectl krew index add cst https://github.com/sysnet4admin/custom-index.git
+$ kubectl krew install cst/ctxon
+```
+
+After installing, the tools will be available as `kubectl kubectxon`.
+
 
 ### Manual
 
