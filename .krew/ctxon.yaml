@@ -1,0 +1,20 @@
+apiVersion: krew.googlecontainertools.github.com/v1alpha2
+kind: Plugin
+metadata:
+  name: kubectxon
+spec:
+  platforms:
+  - sha256: 48ff5e51920b76506f99e18ff927a6b79a354d306e3cb0063af6517b53c605cb
+    uri: https://github.com/sysnet4admin/kubectxon/releases/download/v0.0.2/kubectxon_v0.0.2_linux_arm64.tar.gz
+    bin: kubectxon
+    files:
+    - from: "kubectxon"
+      to: "."
+    - from: "LICENSE"
+      to: "."
+    selector:
+      matchExpressions:
+      - {key: os, operator: In, values: [linux]}
+  version: "v0.0.2"
+  homepage: https://github.com/sysnet4admin/kubectxon
+  shortDescription: Easy to check active-context in kubernetes thru the prompt
