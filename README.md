@@ -66,11 +66,17 @@ After installing, the tool will be available as `kubectl ctxon`.
 You can install and use [Krew](https://github.com/kubernetes-sigs/krew/) kubectl
 plugin manager to get `kubectxon` 
 ```bash
-$ kubectl krew index add cst https://github.com/sysnet4admin/custom-index.git
-$ kubectl krew install cst/ctxon
+$ kubectl krew index add cix https://github.com/sysnet4admin/custom-index.git
+$ kubectl krew install cix/ctxon
 ```
 
-After installing, the tool will be available as `kubectl kubectxon`.
+After installing, the tool will be available as `kubectl ctxon`.
+I recommend to alias `kubectxon` like below: 
+
+```bash
+$ echo "alias kubectxon='kubectl ctxon'" >> ~/.bashrc
+$ source ~/.bashrc
+```
 
 
 ### Manual
