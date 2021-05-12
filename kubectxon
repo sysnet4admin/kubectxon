@@ -106,9 +106,9 @@ toggle_ctxon() {
   fi 
   
   # retain origianl PS1 
-  # GCP compatibility to change PS1@P
+  # underr bash-4.4 compatibility to change PS1
   if [[ ! -f "$originalfile" ]]; then 
-    echo ${PS1@P} > $originalfile
+    echo ${PS1} > $originalfile
   fi
 
   # state changer or init 
@@ -167,8 +167,8 @@ main() {
   # create ctxon working directory & kubectxon as well 
   set_env
 
-  # backup history 
-  cp -r $historyPATH $HOME/.ctxon/.backup_history	
+  # backup history forcely 
+  cp -rf $historyPATH $HOME/.ctxon/.backup_history	
 
   pass_kubectl
   ARGS=${@:1}
