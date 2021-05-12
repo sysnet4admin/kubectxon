@@ -168,7 +168,7 @@ main() {
   set_env
 
   # backup history forcely 
-  cp -rf $historyPATH $HOME/.ctxon/.backup_history	
+  \cp -rf $historyPATH $HOME/.ctxon/.backup_history	
 
   pass_kubectl
   ARGS=${@:1}
