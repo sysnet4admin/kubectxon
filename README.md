@@ -49,7 +49,7 @@ $
 -----
 
 ## Installation
-**Caution**: It support only 'BASH' Shell above 5.0.  
+⚠️**Caution**: It support only 'BASH' Shell above 5.0.  
 - As a `krew` which kubernetes plugins 
 - Manual installation
 
